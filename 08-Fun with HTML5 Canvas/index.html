@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>HTML5 Canvas</title>
+	</head>
+	<style>
+		html, body {
+			margin: 0;
+		}
+	</style>
+	<body>
+		<canvas id="draw" width="800" height="800"></canvas>
+		
+		<script>
+			const canvas = document.querySelector('#draw');
+			const ctx = canvas.getContext('2d');
+			//用来渲染上下文来绘制图形
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			//将宽和高设置为和窗口相同的宽和高。
+			
+			ctx.strokeStyle = "#f00"; //设置轮廓和填充色；
+			ctx.fillStyle = "#f00";
+			ctx.lineCap = 'round';
+			ctx.lineJoin = 'round';
+			//设置线段末梢和接合处的样式。
+			
+			ctx.lineWidth = 80;
+			
+			let isDrawing = false; //flag
+			let lastX = 0;
+			let lastY = 0;
+			
+			let hue = 0;
+			let direction = true;
+			let x = 0;
+			let y = 0;
+			
+			
+			function draw(e) {
+				//首先判断isDrawing的值
+				if(!isDrawing) return;
+				console.log(e);
+				[x, y] = [e.offsetX, e.offsetY]; //更新x, y的值
+				ctx.strokeStyle = `hsl(${hue}, 90%, 50%)`;
+				if(hue >= 360) {
+					hue = 0;
+				}
+				hue++;
+				//开始绘制
+				ctx.beginPath();
+				ctx.moveTo(lastX, lastY);
+				ctx.lineTo(x, y);
+				ctx.stroke();
+				[lastX, lastY] = [e.offsetX, e.offsetY];
+				
+				if(ctx.lineWidth > 120 || ctx.lineWidth < 10) {
+					direction = !direction;
+				} 
+				if (direction) {
+					ctx.lineWidth++;
+				} else {
+					ctx.lineWidth--;
+				}
+			}
+			
+			canvas.addEventListener('mousedown', (e) => {
+				isDrawing = true;
+				[lastX, lastY] = [e.offsetX, e.offsetY];
+			});
+			
+			canvas.addEventListener('mousemove', draw);
+			canvas.addEventListener('mouseup', () => isDrawing = false);
+			canvas.addEventListener('mouseout', () => isDrawing = false);
+			
+			
+		</script>
+		
+	</body>
+</html>
