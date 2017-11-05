@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Console Tricks!</title>
+	</head>
+	
+	<body>
+		<p onClick="makeGreen()">×BREAK×DOWN×</p>
+		
+		<script>
+			const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+			const p = document.querySelector('p');
+			function makeGreen() {
+				
+				p.style.color = 'green';
+				p.style.fontSize = '50px'; 
+			}
+			
+			// Regular
+			console.log('hello');
+
+		    // Interpolated  字符替换
+		    console.log('I am %d years old', 20);
+		    console.log('My name is %s', 'zhou jie');
+		
+		    // Styled 设定输出的样式
+		    console.log('%c I am an angel', 'font-size: 50px; color: pink');
+		
+		    // warning!
+			console.warn('Be careful!');
+			
+		    // Error :|
+		    console.error('You are wrong!');
+		
+		    // Info 用于输出信息
+		    console.info('Show me the code');
+		
+		    // Testing
+		    
+			console.assert(1===1, '啥都没输出');
+			console.assert(1===0, 'You are wrong!');
+			console.assert(p.innerHTML.match('BREAK'), 'right?');
+			
+		    // clearing
+//			console.clear();
+				
+		    // Viewing DOM Elements
+		    console.log(p);
+		    console.dir(p);
+		
+		    // Grouping together
+		    dogs.forEach(dog => {
+		    	console.groupCollapsed(`${dog.name}`);
+		    	console.log(`${ dog.name }`);
+		    	console.log(`${ dog.age}`);
+		    	console.groupEnd(`${ dog.name }`);
+		    })
+		
+		    // counting
+			console.count("（读来过反）羊只");
+		  	console.count("（读来过反）羊只");
+		  	console.count("（读来过反）鱼条");
+		  	console.count("（读来过反）羊只");
+		  	console.count("（读来过反）羊只");
+		  	console.count("（读来过反）鱼条");
+		  	console.count("（读来过反）鱼条");
+		  	console.count("（读来过反）羊只");
+		    // timing
+		    
+		    const endpoint = 'https://api.github.com/users/vjviolet';
+		    console.time('fetch data!');
+		    fetch(endpoint)
+		    	.then(blob => blob.json())
+		    	.then(data => {
+		    		console.timeEnd('fetch data!');
+		    		console.log(data);
+		    	})
+		    
+		    //table
+		    console.table(dogs);
+		</script>
+	</body>
+</html>
