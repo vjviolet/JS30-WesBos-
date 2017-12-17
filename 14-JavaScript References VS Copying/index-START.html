@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Reference VS Copy</title>
+</head>
+<body>
+  <script>
+    // 从 String、Number、Boolean 类型的值开始：
+    // string, Number, Boolean which is copying, 
+    // let age = 100;
+    // let age2 = age;
+    // age2 = 200;
+    // console.log(age, age2);
+    // age = 100, age = 200, it is the same as Number and Boolean.
+
+    // 首先我们有一个数组
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+    
+
+    // 现在我们想要复制它
+
+    // let play = players;
+    // play[2] = 'Zhou';
+    // console.log(play, players);
+    //if change the array of play, the players also change, so it is the reference.
+
+    // 也许你觉得可以直接这样修改复制后的数组:
+
+    // 但我们修改这个数组的时候会发生什么呢？
+
+    // 这就是问题所在
+
+    // NO！ 原数组也被修改过了
+
+    // 为什么？因为 team 只是这个数组的引用，并不是它的复制。team 和 players 指向的是同一个数组。
+
+    // 所以如何解决这个问题？下面来进行真正的复制吧。
+    // const team2 = players.slice();
+    // console.log(team2);
+    // team2[2] = 'Jie';
+    // console.log(team2, players);
+    //here players don't change.
+
+    // one day
+
+    // 或者创建一个新数组，然后用 concat 方法来获取它
+    // let team3 = [].concat(players);
+    // team3[2] = 'Jie';
+    // console.log(team3, players);
+
+    // 再或者用 ES6 里面的扩展语法
+    let team4 = [...players];
+    let team5 = Array.from(players);
+
+
+
+    // 现在再修改 team5，原数组不会变了
+
+    // 对 Object 类型的数据来说也是一样的，我们用一个 person 例子来说明
+    const person = {
+      name: 'wesbos',
+      age: 80
+    };
+
+    // let person2 = person;
+    // person2.age = 90;
+    // console.log(person, person2);
+    //if we change the age, then the origin object change too.
+
+    // 现在又一个 Object 对象
+
+    // 然后以为这样可以复制它:
+    const person3 = Object.assign({}, person, {name: 'Zhoujie', age: 20});
+    console.log(person, person3);
+    //这样就可以实现复制，而原本的对象不会改变。
+
+    // 到底要怎样才能真正得到它的复制版呢？
+
+    // 我们满怀期望的希望扩展语法对它也会生效
+
+    // 需要注意的是：这里的例子里面，我们用的数组和对象都只是一层嵌套，Lodash 有一个深度复制的方法，但你使用之前需要多考虑一下。
+
+    const people = {
+      name: 'Zhoujie',
+      age: 20, 
+      social: {
+        qq: '268423',
+        wechat: 'violet'
+      }
+    };
+
+    // const people2 = Object.assign({}, people, {qq: '268423'});
+    // console.log(people, people2);
+    //下面是深度拷贝， 会拷贝进对象中的对象
+    const people3 = JSON.parse(JSON.stringify(people));
+    //这里的social也是拷贝。
+  </script>
+
+</body>
+</html>
+
+
+<!-- 这里总结数组复制的几种方法， 一般数组都是引用的 -->
+<!-- 1. const team = players.slice(); -->
+<!-- 2. const team = [].concat(players); -->
+<!-- 3. const team = [...players] -->
+<!-- 4. const team = Array.from(players); -->
